@@ -6,3 +6,4 @@ Web Technologies Course Project (LAMP stack, Ubuntu)
 - `backend/`  - PHP backend (coming soon)
 - `frontend/` - UI (coming soon)
 - `docs/`     - ERD and documentation
+# medq
