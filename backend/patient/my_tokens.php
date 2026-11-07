@@ -12,7 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_id'])) {
                             WHERE token_id = ? AND patient_id = ? AND status = 'waiting'");
     $stmt->execute([$_POST['cancel_id'], $patient_id]);
 
-    if ($stmt->rowCount() === 1) {
+        if ($stmt->rowCount() === 1) {
+        add_notification($pdo, (int)$_POST['cancel_id'], 'cancelled');   // NEW alert (FR-6)
         set_flash('success', 'Token cancelled.');
     } else {
         set_flash('error', 'This token cannot be cancelled.');
