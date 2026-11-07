@@ -1,10 +1,6 @@
 <?php
-require_once 'includes/functions.php';
-if (!isset($_SESSION['user_id'])) redirect('login.php');
+require_once 'includes/auth.php';
+require_login();
 
-$page_title = 'Dashboard';
-include 'includes/header.php';
-?>
-<h2>Welcome, <?= e($_SESSION['name']) ?></h2>
-<p>You are logged in as <b><?= e($_SESSION['role']) ?></b>.</p>
-<?php include 'includes/footer.php'; ?>
+// Folder names match the role names: admin/, doctor/, receptionist/, patient/
+redirect($_SESSION['role'] . '/dashboard.php');
