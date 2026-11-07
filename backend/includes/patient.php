@@ -14,7 +14,8 @@ function current_patient_id($pdo) {
 
 // Create a token for a patient.
 // Returns [token_id, ''] on success or [null, 'error message'] on failure.
-function issue_token($pdo, $doctor_id, $patient_id, $date) {
+// NEW: $booking_type is 'online' or 'walk_in', $priority is 'normal', 'senior' or 'emergency'
+function issue_token($pdo, $doctor_id, $patient_id, $date, $booking_type = 'online', $priority = 'normal') {
     $today = date('Y-m-d');
 
     // 1. Check the date
@@ -28,6 +29,10 @@ function issue_token($pdo, $doctor_id, $patient_id, $date) {
     if ($date > date('Y-m-d', strtotime('+30 days'))) {
         return [null, 'You can book only up to 30 days ahead.'];
     }
+    // NEW: walk-ins are only for today
+    if ($booking_type === 'walk_in' && $date !== $today) {
+        return [null, 'Walk-in tokens are only for today.'];
+    }
 
     // 2. Does the doctor work on that weekday? (Mon, Tue, ...)
     $day = date('D', strtotime($date));
@@ -38,7 +43,8 @@ function issue_token($pdo, $doctor_id, $patient_id, $date) {
     if (!$sched['max_tokens']) {
         return [null, 'The doctor does not work on this day.'];
     }
-    if ($date === $today && date('H:i:s') >= $sched['last_end']) {
+    // NEW: the "clinic hours over" rule applies to online booking only
+    if ($booking_type === 'online' && $date === $today && date('H:i:s') >= $sched['last_end']) {
         return [null, "Today's clinic hours are over."];
     }
 
@@ -48,13 +54,13 @@ function issue_token($pdo, $doctor_id, $patient_id, $date) {
                               AND status IN ('waiting','in_consultation')");
     $stmt->execute([$doctor_id, $patient_id, $date]);
     if ($stmt->fetchColumn() > 0) {
-        return [null, 'You already have a token with this doctor on this date.'];
+        return [null, 'This patient already has a token with this doctor on this date.'];
     }
 
     // 4. Give the next token number inside a transaction
     $pdo->beginTransaction();
 
-    // FOR UPDATE locks the doctor row. If two patients book at the same moment,
+    // FOR UPDATE locks the doctor row. If two bookings happen at the same moment,
     // the second one waits until the first finishes, so numbers never repeat.
     $stmt = $pdo->prepare('SELECT doctor_id FROM doctors WHERE doctor_id = ? FOR UPDATE');
     $stmt->execute([$doctor_id]);
@@ -63,10 +69,10 @@ function issue_token($pdo, $doctor_id, $patient_id, $date) {
         return [null, 'Doctor not found.'];
     }
 
-    // Daily limit (FR-14): cancelled tokens do not count
+    // Daily limit (FR-14): cancelled tokens do not count. NEW: emergencies may go over the limit.
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM tokens WHERE doctor_id = ? AND token_date = ? AND status <> 'cancelled'");
     $stmt->execute([$doctor_id, $date]);
-    if ($stmt->fetchColumn() >= $sched['max_tokens']) {
+    if ($priority !== 'emergency' && $stmt->fetchColumn() >= $sched['max_tokens']) {
         $pdo->rollBack();
         return [null, 'All tokens for this day are booked.'];
     }
@@ -76,9 +82,10 @@ function issue_token($pdo, $doctor_id, $patient_id, $date) {
     $stmt->execute([$doctor_id, $date]);
     $token_no = $stmt->fetchColumn();
 
+    // NEW: booking type and priority come from the function parameters
     $stmt = $pdo->prepare("INSERT INTO tokens (doctor_id, patient_id, token_date, token_no, booking_type, priority, status)
-                           VALUES (?, ?, ?, ?, 'online', 'normal', 'waiting')");
-    $stmt->execute([$doctor_id, $patient_id, $date, $token_no]);
+                           VALUES (?, ?, ?, ?, ?, ?, 'waiting')");
+    $stmt->execute([$doctor_id, $patient_id, $date, $token_no, $booking_type, $priority]);
     $token_id = $pdo->lastInsertId();
 
     $pdo->commit();
