@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
         try {
             $stmt = $pdo->prepare('DELETE FROM users WHERE user_id = ?');
             $stmt->execute([$delete_id]);
+            log_action($pdo, 'Deleted user id ' . $delete_id);
             set_flash('success', 'User deleted.');
         } catch (PDOException $e) {
             set_flash('error', 'Cannot delete: this user has related records (for example doctor tokens).');

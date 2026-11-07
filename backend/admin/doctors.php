@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     try {
         $stmt = $pdo->prepare('DELETE FROM doctors WHERE doctor_id = ?');
         $stmt->execute([$_POST['delete_id']]);
+        log_action($pdo, 'Deleted doctor id ' . (int)$_POST['delete_id']);
         set_flash('success', 'Doctor profile deleted.');
     } catch (PDOException $e) {
         set_flash('error', 'Cannot delete: this doctor already has tokens.');

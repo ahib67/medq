@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $pdo->prepare('INSERT INTO doctors (user_id, dept_id, specialization, room_no, avg_consult_mins) VALUES (?, ?, ?, ?, ?)');
             $stmt->execute([$doc['user_id'], $doc['dept_id'], $doc['specialization'], $doc['room_no'], $doc['avg_consult_mins']]);
         }
+        log_action($pdo, ($id ? 'Updated' : 'Created') . ' doctor profile (user id ' . $doc['user_id'] . ')');
         set_flash('success', 'Doctor saved.');
         redirect('admin/doctors.php');
     }

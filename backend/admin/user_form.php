@@ -81,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // If admin edited himself, refresh the name shown in the header
         if ($id === (int)$_SESSION['user_id']) $_SESSION['name'] = $user['name'];
 
+        log_action($pdo, ($id ? 'Updated' : 'Created') . ' user: ' . $user['email'] . ' (' . $user['role'] . ')');
         set_flash('success', 'User saved.');
         redirect('admin/users.php');
     }

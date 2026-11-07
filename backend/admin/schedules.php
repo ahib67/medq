@@ -7,6 +7,7 @@ require_role('admin');
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     $stmt = $pdo->prepare('DELETE FROM doctor_schedules WHERE schedule_id = ?');
     $stmt->execute([$_POST['delete_id']]);
+    log_action($pdo, 'Deleted schedule id ' . (int)$_POST['delete_id']);
     set_flash('success', 'Schedule deleted.');
     redirect('admin/schedules.php');
 }

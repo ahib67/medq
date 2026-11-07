@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt = $pdo->prepare('INSERT INTO departments (dept_name) VALUES (?)');
                 $stmt->execute([$name]);
             }
+            log_action($pdo, ($id ? 'Updated' : 'Created') . ' department: ' . $name);
             set_flash('success', 'Department saved.');
             redirect('admin/departments.php');
         } catch (PDOException $e) {

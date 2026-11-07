@@ -46,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt = $pdo->prepare('INSERT INTO doctor_schedules (doctor_id, day_of_week, start_time, end_time, max_tokens) VALUES (?, ?, ?, ?, ?)');
                 $stmt->execute([$s['doctor_id'], $s['day_of_week'], $s['start_time'], $s['end_time'], $s['max_tokens']]);
             }
+            log_action($pdo, ($id ? 'Updated' : 'Created') . ' schedule: doctor id ' . $s['doctor_id'] . ', ' . $s['day_of_week'] . ' ' . $s['start_time'] . '-' . $s['end_time']);
             set_flash('success', 'Schedule saved.');
             redirect('admin/schedules.php');
         } catch (PDOException $e) {

@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     try {
         $stmt = $pdo->prepare('DELETE FROM departments WHERE dept_id = ?');
         $stmt->execute([$_POST['delete_id']]);
+        log_action($pdo, 'Deleted department id ' . (int)$_POST['delete_id']);
         set_flash('success', 'Department deleted.');
     } catch (PDOException $e) {
         // The database refuses because doctors still use this department (foreign key)
