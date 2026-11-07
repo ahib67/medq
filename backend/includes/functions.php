@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../config/config.php';
 session_start();
 
+session_start();
+date_default_timezone_set('Asia/Karachi');
 // Safely print text on a page (prevents XSS)
 function e($text) {
     return htmlspecialchars((string)$text, ENT_QUOTES, 'UTF-8');

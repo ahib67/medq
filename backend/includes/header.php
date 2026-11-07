@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e($page_title ?? 'MedQ') ?> - MedQ</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/css/style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/css/styles.css">
+<?= $extra_head ?? '' ?>
 </head>
 <body>
 <header class="topbar">
