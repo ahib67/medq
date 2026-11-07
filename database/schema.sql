@@ -71,6 +71,43 @@ CREATE TABLE doctor_schedules (
     UNIQUE KEY uq_doctor_day_start (doctor_id, day_of_week, start_time)
 ) ENGINE=InnoDB;
 
+DELIMITER $$
+
+CREATE TRIGGER trg_sched_no_overlap_ins
+BEFORE INSERT ON doctor_schedules
+FOR EACH ROW
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM doctor_schedules
+         WHERE doctor_id   = NEW.doctor_id
+           AND day_of_week = NEW.day_of_week
+           AND start_time  < NEW.end_time
+           AND end_time    > NEW.start_time
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Doctor already has an overlapping schedule on this day';
+    END IF;
+END$$
+
+CREATE TRIGGER trg_sched_no_overlap_upd
+BEFORE UPDATE ON doctor_schedules
+FOR EACH ROW
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM doctor_schedules
+         WHERE doctor_id   = NEW.doctor_id
+           AND day_of_week = NEW.day_of_week
+           AND schedule_id <> NEW.schedule_id
+           AND start_time  < NEW.end_time
+           AND end_time    > NEW.start_time
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Doctor already has an overlapping schedule on this day';
+    END IF;
+END$$
+
+DELIMITER ;
+
 CREATE TABLE tokens (
     token_id     INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     doctor_id    INT UNSIGNED NOT NULL,
