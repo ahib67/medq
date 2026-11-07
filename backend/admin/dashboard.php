@@ -34,6 +34,8 @@ include '../includes/header.php';
     <a class="btn" href="departments.php">Departments</a>
     <a class="btn" href="doctors.php">Doctors</a>
     <a class="btn" href="schedules.php">Schedules</a>
+    <a class="btn" href="analytics.php">Analytics</a>
+    <a class="btn" href="audit_log.php">Audit log</a>
 </p>
 
 <h3>Recently registered</h3>
