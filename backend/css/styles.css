@@ -17,3 +17,6 @@ button, .btn { background: #0b5c8f; color: #fff; border: 0; padding: 10px 16px; 
 .card b { display: block; font-size: 28px; color: #0b5c8f; }
 table { width: 100%; border-collapse: collapse; background: #fff; }
 th, td { padding: 8px; border-bottom: 1px solid #ddd; text-align: left; }
+.chart-grid { display: flex; gap: 16px; flex-wrap: wrap; margin: 16px 0; }
+.chart-box { background: #fff; padding: 12px; border-radius: 8px; flex: 1; min-width: 280px; height: 280px; position: relative; }
+.chart-box.wide { flex-basis: 100%; }

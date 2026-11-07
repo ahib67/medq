@@ -28,6 +28,14 @@ include '../includes/header.php';
     <div class="card"><b><?= e($waiting_today) ?></b>Waiting now</div>
 </div>
 
+<h3>Live charts</h3>
+<p><small id="chartTime">Loading...</small></p>
+<div class="chart-grid">
+    <div class="chart-box"><canvas id="daysChart"></canvas></div>
+    <div class="chart-box"><canvas id="statusChart"></canvas></div>
+    <div class="chart-box wide"><canvas id="doctorChart"></canvas></div>
+</div>
+
 <h3>Manage</h3>
 <p>
     <a class="btn" href="users.php">Users</a>
@@ -50,4 +58,6 @@ include '../includes/header.php';
         </tr>
     <?php endforeach; ?>
 </table>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="../js/admin_charts.js"></script>
 <?php include '../includes/footer.php'; ?>
