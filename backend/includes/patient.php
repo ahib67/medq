@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/notify.php';
 // Helper functions used by the patient pages
 
 // Find the patient_id of the logged-in user
@@ -88,6 +89,12 @@ function issue_token($pdo, $doctor_id, $patient_id, $date, $booking_type = 'onli
     $stmt->execute([$doctor_id, $patient_id, $date, $token_no, $booking_type, $priority]);
     $token_id = $pdo->lastInsertId();
 
-    $pdo->commit();
+        $pdo->commit();
+
+    // NEW: booking confirmation alert (FR-6)
+    if ($booking_type === 'online') {
+        add_notification($pdo, $token_id, 'token_booked');
+    }
+
     return [$token_id, ''];
 }

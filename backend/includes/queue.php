@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/notify.php';
 // Helper functions used by doctor and receptionist pages
 
 // Save a staff action in the audit log (FR-13, NFR-10)
@@ -66,7 +67,12 @@ function call_next($pdo, $doctor_id) {
     $stmt = $pdo->prepare("UPDATE tokens SET status = 'in_consultation', called_at = NOW() WHERE token_id = ?");
     $stmt->execute([$next['token_id']]);
 
-    $pdo->commit();
+        $pdo->commit();
+
+    // NEW: alerts (FR-6, FR-18)
+    add_notification($pdo, $next['token_id'], 'your_turn');   // tell the called patient
+    check_near_turn($pdo, $doctor_id);                        // tell the 3rd patient in line
+
     return [$next['token_no'], ''];
 }
 
