@@ -89,7 +89,7 @@ include 'menu.php';
         <tr>
             <td><?= e(sprintf('%02d:00', $p['hr'])) ?></td>
             <td><?= e($p['visits']) ?></td>
-            <td><div style="background:#0b5c8f; height:14px; width:<?= round($p['visits'] * 100 / $max_visits) ?>%"></div></td>
+            <td><div style="background:var(--accent); height:14px; width:<?= round($p['visits'] * 100 / $max_visits) ?>%"></div></td>
         </tr>
     <?php endforeach; ?>
     <?php if (!$peak): ?><tr><td colspan="3">No data for this period.</td></tr><?php endif; ?>

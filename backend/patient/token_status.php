@@ -62,7 +62,7 @@ include 'menu.php';
     <h2>Token #<?= e($t['token_no']) ?></h2>
     <p><b><?= e($t['doctor_name']) ?></b> - Room <?= e($t['room_no']) ?><br>
        Date: <?= e($t['token_date']) ?><br>
-       Status: <b><?= e($t['status']) ?></b></p>
+       Status: <?= e($t['status']) ?></p>
 
     <?php if ($t['status'] === 'in_consultation'): ?>
         <p class="flash success">It is your turn. Please go to the doctor's room.</p>

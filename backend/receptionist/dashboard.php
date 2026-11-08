@@ -72,9 +72,9 @@ include 'menu.php';
                 <td>#<?= e($t['token_no']) ?></td>
                 <td><?= e($t['patient_name']) ?></td>
                 <td><?= e($t['patient_phone']) ?></td>
-                <td><?= e($t['priority']) ?></td>
+                <td><?= badge($t['priority']) ?></td>
                 <td><?= e($t['booking_type']) ?></td>
-                <td><?= e($t['status']) ?></td>
+                <td><?= badge($t['status']) ?></td>
                 <td>
                     <?php if ($t['status'] === 'waiting' || $t['status'] === 'in_consultation'): ?>
                         <form method="post" style="display:inline">

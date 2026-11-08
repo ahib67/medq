@@ -78,9 +78,9 @@ include 'menu.php';
         <tr>
             <td>#<?= e($t['token_no']) ?></td>
             <td><?= e($t['patient_name']) ?></td>
-            <td><?= e($t['priority']) ?></td>
+            <td><?= badge($t['priority']) ?></td>
             <td><?= e($t['booking_type']) ?></td>
-            <td><?= e($t['status']) ?></td>
+            <td><?= badge($t['status']) ?></td>
             <td>
                 <form method="post" style="display:inline">
                     <input type="hidden" name="token_id" value="<?= e($t['token_id']) ?>">

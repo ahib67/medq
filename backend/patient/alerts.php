@@ -28,7 +28,7 @@ include 'menu.php';
         <tr>
             <td><?= e($a['sent_at'] ?: '-') ?></td>
             <td><?= e(notification_text($a['type'], $a['token_no'], $a['doctor_name'], $a['token_date'], $a['room_no'])) ?></td>
-            <td><?= e($a['status']) ?></td>
+            <td><?= badge($a['status']) ?></td>
         </tr>
     <?php endforeach; ?>
     <?php if (!$alerts): ?><tr><td colspan="3">No alerts yet.</td></tr><?php endif; ?>
