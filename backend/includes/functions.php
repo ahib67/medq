@@ -27,3 +27,13 @@ function show_flash() {
         unset($_SESSION['flash']);
     }
 }
+// Gives the class "active" to the menu link of the page we are on.
+// Example: active('users.php', 'user_form.php')
+function active(...$files) {
+    return in_array(basename($_SERVER['PHP_SELF']), $files) ? 'active' : '';
+}
+
+// A small coloured label for a status or priority (the colours come from style.css)
+function badge($text) {
+    return '<span class="badge ' . e($text) . '">' . e(str_replace('_', ' ', $text)) . '</span>';
+}
