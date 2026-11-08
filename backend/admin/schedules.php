@@ -41,7 +41,7 @@ include 'menu.php';
                 <a href="schedule_form.php?id=<?= e($s['schedule_id']) ?>">Edit</a>
                 <form method="post" style="display:inline" onsubmit="return confirm('Delete this schedule?');">
                     <input type="hidden" name="delete_id" value="<?= e($s['schedule_id']) ?>">
-                    <button type="submit" style="margin:0;padding:4px 8px">Delete</button>
+                    <button type="submit" class="btn-danger" style="margin:0;padding:4px 8px">Delete</button>
                 </form>
             </td>
         </tr>

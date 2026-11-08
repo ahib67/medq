@@ -20,3 +20,30 @@ th, td { padding: 8px; border-bottom: 1px solid #ddd; text-align: left; }
 .chart-grid { display: flex; gap: 16px; flex-wrap: wrap; margin: 16px 0; }
 .chart-box { background: #fff; padding: 12px; border-radius: 8px; flex: 1; min-width: 280px; height: 280px; position: relative; }
 .chart-box.wide { flex-basis: 100%; }
+/* Polish */
+.card, .box, .chart-box { box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+button:hover, .btn:hover { background: #094a73; }
+input:focus, select:focus { outline: 2px solid #0b5c8f; border-color: #0b5c8f; }
+input, select { border: 1px solid #ccc; border-radius: 4px; }
+tr:hover td { background: #f0f6fa; }
+th { background: #eef2f5; }
+
+/* Delete and cancel buttons */
+.btn-danger { background: #c0392b; }
+.btn-danger:hover { background: #962d22; }
+
+/* Token status labels */
+.badge { padding: 2px 8px; border-radius: 10px; font-size: 12px; color: #fff; }
+.badge.waiting { background: #e67e22; }
+.badge.called { background: #0b5c8f; }
+.badge.completed { background: #27ae60; }
+.badge.cancelled, .badge.no_show { background: #7f8c8d; }
+
+/* Big number for the live token screen */
+.token-big { font-size: 72px; font-weight: bold; text-align: center; color: #0b5c8f; }
+
+/* Phones */
+@media (max-width: 600px) {
+  .topbar { flex-direction: column; gap: 8px; }
+  table { display: block; overflow-x: auto; }
+}

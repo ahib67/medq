@@ -46,7 +46,7 @@ include 'menu.php';
                 <?php if ($u['user_id'] != $_SESSION['user_id']): ?>
                     <form method="post" style="display:inline" onsubmit="return confirm('Delete this user?');">
                         <input type="hidden" name="delete_id" value="<?= e($u['user_id']) ?>">
-                        <button type="submit" style="margin:0;padding:4px 8px">Delete</button>
+                        <button type="submit" class="btn-danger" style="margin:0;padding:4px 8px">Delete</button>
                     </form>
                 <?php endif; ?>
             </td>
