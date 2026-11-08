@@ -44,7 +44,7 @@ include 'menu.php';
             <td><?= e($t['doctor_name']) ?></td>
             <td><?= e($t['room_no']) ?></td>
             <td>#<?= e($t['token_no']) ?></td>
-            <td><?= e($t['status']) ?></td>
+            <td><?= badge($t['status']) ?></td>
             <td>
                 <?php if ($t['status'] === 'waiting' || $t['status'] === 'in_consultation'): ?>
                     <a href="token_status.php?id=<?= e($t['token_id']) ?>">Live status</a>
