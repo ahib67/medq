@@ -44,7 +44,7 @@ include 'menu.php';
                 <a href="department_form.php?id=<?= e($d['dept_id']) ?>">Edit</a>
                 <form method="post" style="display:inline" onsubmit="return confirm('Delete this department?');">
                     <input type="hidden" name="delete_id" value="<?= e($d['dept_id']) ?>">
-                    <button type="submit" style="margin:0;padding:4px 8px">Delete</button>
+                    <button type="submit" class="btn-danger" style="margin:0;padding:4px 8px">Delete</button>
                 </form>
             </td>
         </tr>
