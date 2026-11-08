@@ -2,6 +2,8 @@
 // Step 1: create the three charts empty. Step 2: fill them with data from the server.
 
 var charts = {};
+   Chart.defaults.font.family = "'DM Sans', sans-serif";
+   
 
 function createCharts() {
     // Chart 1: line chart, tokens per day
@@ -9,7 +11,7 @@ function createCharts() {
         type: 'line',
         data: {
             labels: [],
-            datasets: [{ label: 'Tokens', data: [], borderColor: '#0b5c8f', backgroundColor: '#0b5c8f', tension: 0.3 }]
+            datasets: [{ label: 'Tokens', data: [], borderColor: '#1f6f5c', backgroundColor: '#1f6f5c', tension: 0.3 }]
         },
         options: { maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } }
     });
@@ -19,7 +21,7 @@ function createCharts() {
         type: 'doughnut',
         data: {
             labels: [],
-            datasets: [{ data: [], backgroundColor: ['#f5a623', '#4a90e2', '#4cd964', '#9b9b9b', '#e74c3c'] }]
+            datasets: [{ data: [],    backgroundColor: ['#c9962b', '#3b6ea5', '#1f6f5c', '#a7aeb0', '#b3412f']}]
         },
         options: { maintainAspectRatio: false }
     });
