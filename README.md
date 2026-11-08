@@ -63,7 +63,7 @@ SELECT token_no FROM tokens
 
 This avoids keeping two copies of the same fact in sync.
 
-![ERD - Clinic Queue & Live OPD Token System](docs/erd-approach-b.png)
+![ERD - Clinic Queue & Live OPD Token System](docs/erd.jpeg)
 
 ### Tables
 
